@@ -1,15 +1,27 @@
 {
   "name": "hackjunior",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "author": "jakub kijek",
   "scripts": {
+    "dev:server": "cross-env NODE_ENV=development nodemon server.js",
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "cross-env NODE_ENV=production next build",
+    "start": "cross-env NODE_ENV=production next start"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.6"
   },
   "dependencies": {
-    "next": "10.0.2",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "express": "^4.17.1",
+    "next": "10.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-draggable": "^4.4.3",
+    "react-ssr-prepass": "npm:preact-ssr-prepass@^1.1.2",
+    "recoil": "^0.1.2",
+    "socket.io": "^3.0.3",
+    "socket.io-client": "^3.0.3",
+    "styled-components": "^5.2.1"
   }
 }

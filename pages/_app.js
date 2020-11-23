@@ -1,7 +1,13 @@
-import '../styles/globals.css'
+import React from 'react';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import Theme from '../ui/Theme';
 
-export default MyApp
+
+
+const ApplicationOutlet = ({ Component, pageProps }) => (
+  <Theme>
+    <Component {...pageProps} />
+  </Theme>
+);
+
+export default ApplicationOutlet;
