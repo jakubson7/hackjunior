@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { NodeState, NodeListState } from '../map/state';
+import { NodeState, NodeListState } from '../../state/MindMap';
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import { SelectedNodeState } from '../map/state';
+import { SelectedNodeState } from '../../state/MindMap';
 
 
 

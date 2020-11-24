@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import Draggable from '../properties/Draggable';
 import Selectable from '../properties/Selectable';
 import Connectable from '../properties/Connectable';
-import { NodeState, SelectedNodeState } from '../map/state';
+import { NodeState, SelectedNodeState } from '../../state/MindMap';
 
 
 

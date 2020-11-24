@@ -29,4 +29,5 @@ export const ButtonInput = styled.button`
   background-color: transparent;
   border-radius: 16px;
   font-size: 32px;
+  cursor: pointer;
 `;

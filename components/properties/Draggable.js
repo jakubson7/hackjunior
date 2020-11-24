@@ -2,7 +2,7 @@ import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { DraggableCore } from 'react-draggable';
 
-import { NodeState, NodeConnectionTreePoistionState } from '../map/state';
+import { NodeState, NodeConnectionTreePoistionState } from '../../state/MindMap';
 
 
 

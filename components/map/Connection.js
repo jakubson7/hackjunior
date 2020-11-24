@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { NodeConnectionPairPositionState } from './state';
+import { NodeConnectionPairPositionState } from '../../state/MindMap';
 
 
 

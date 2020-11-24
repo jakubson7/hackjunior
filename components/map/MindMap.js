@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useRecoilState } from 'recoil';
-import { NodeListState } from './state';
+import { NodeListState } from '../../state/MindMap';
 import FreeNode from '../nodes/Free';
 
 

@@ -1,22 +1,17 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 
-import GlobalStyles from '../styles/GlobalStyles';
 import { SimpleView, Text } from '../styles/Fragment';
-import Navigation from '../components/Navigation';
+import Navigation from '../components/fragments/Navigation';
 
 
 
 const HomePage = () => (
-  <RecoilRoot>
-    <SimpleView>
-      <Navigation page='/' />
-      <Text>
-        aplikacja służy do wsólnego tworzenia mapy wyśli i eydycji w czasie rzeczywistym
+  <SimpleView>
+    <Navigation page='/' />
+    <Text>
+      aplikacja służy do wsólnego tworzenia mapy wyśli i eydycji w czasie rzeczywistym
       </Text>
-    </SimpleView>
-    <GlobalStyles />
-  </RecoilRoot>
+  </SimpleView>
 );
 
 export default HomePage;
