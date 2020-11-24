@@ -10,7 +10,7 @@ const HomePage = () => (
     <Navigation page='/' />
     <Text>
       aplikacja służy do wsólnego tworzenia mapy wyśli i eydycji w czasie rzeczywistym
-      </Text>
+    </Text>
   </SimpleView>
 );
 

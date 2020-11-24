@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "author": "jakub kijek",
   "scripts": {
-    "dev:server": "cross-env NODE_ENV=development nodemon server.js",
-    "dev": "cross-env NODE_ENV=development next dev",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production node server.js"
   },
@@ -15,11 +14,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "next": "10.0.0",
-    "next-plugin-preact": "^3.0.3",
-    "preact": "^10.5.5",
-    "preact-render-to-string": "^5.1.11",
-    "react": "npm:@preact/compat@0.0.3",
-    "react-dom": "npm:@preact/compat@0.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-draggable": "^4.4.3",
     "react-ssr-prepass": "npm:preact-ssr-prepass@^1.1.2",
     "recoil": "^0.1.2",

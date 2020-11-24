@@ -9,7 +9,7 @@ const JoinPage = () => (
     <Navigation page='/join' />
     <Text>
       join
-      </Text>
+    </Text>
   </SimpleView>
 );
 

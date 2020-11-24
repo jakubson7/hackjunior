@@ -1,14 +1,30 @@
-import { atom, atomFamily, selectorFamily } from 'recoil';
+import { atom, selector, atomFamily, selectorFamily } from 'recoil';
+
+import socket from '../utils/socket';
+import { RoomState } from './Room';
 
 
 
-export const NodeListState = atom({
-  key: 'node-list',
+const __NodeListState = atom({
+  key: '__node-list',
   default: []
 });
+export const NodeListState = selector({
+  key: 'node-list',
+  get: ({ get }) => get(__NodeListState),
+  set:  ({ set, get }, setter) => {
+    const { name } = get(RoomState);
+    const nodeList = get(__NodeListState);
 
-export const NodeState = atomFamily({
-  key: 'node',
+    set(__NodeListState, setter);
+    socket.emit('send-node-list', name, nodeList);
+  }
+});
+
+
+
+const __NodeState = atomFamily({
+  key: '__node',
   default: {
     position: {
       x: 100,
@@ -22,6 +38,19 @@ export const NodeState = atomFamily({
     selected: false
   }
 });
+export const NodeState = selectorFamily({
+  key: 'node',
+  get: id => ({ get }) => get(__NodeState(id)),
+  set: id => ({ set, get }, setter) => {
+    const { name } = get(RoomState);
+    const node = get(__NodeState(id));
+
+    set(__NodeState(id), setter);
+    socket.emit('send-node-list', name, { id, node });
+  }
+});
+
+
 
 export const SelectedNodeState = atom({
   key: 'selected-node',
@@ -34,17 +63,18 @@ export const SelectedNodeState = atom({
 export const NodeConnectionPairPositionState = selectorFamily({
   key: 'node-connection-pair-position',
   get: (base, target) => ({ get }) => ({
-    basePosition: get(NodeState(base)).position,
-    targetPosition: get(NodeState(target)).position
+    basePosition: get(__NodeState(base)).position,
+    targetPosition: get(__NodeState(target)).position
   })
 });
 
 export const NodeConnectionTreePoistionState = selectorFamily({
   key: 'node-connection-list--position',
   set: base => ({ set, get }, { movementX, movementY }) => {
-    const baseNode = get(NodeState(base));
+    const baseNode = get(__NodeState(base));
+    const { name } = get(RoomState);
 
-    set(NodeState(base), node => ({
+    set(__NodeState(base), node => ({
       ...node,
       position: {
         x: node.position.x + movementX,
@@ -52,5 +82,10 @@ export const NodeConnectionTreePoistionState = selectorFamily({
       }
     }));
     baseNode.connections.forEach(target => set(NodeConnectionTreePoistionState(target), { movementX, movementY }));
+    socket.emit('send-node-tree-movement', name, { 
+      id: base,
+      movementX,
+      movementY 
+    });
   }
 });
