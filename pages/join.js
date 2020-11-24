@@ -7,16 +7,16 @@ import Navigation from '../components/Navigation';
 
 
 
-const HomePage = () => (
+const JoinPage = () => (
   <RecoilRoot>
     <SimpleView>
-      <Navigation page='/' />
+      <Navigation page='/join' />
       <Text>
-        aplikacja służy do wsólnego tworzenia mapy wyśli i eydycji w czasie rzeczywistym
+        join
       </Text>
     </SimpleView>
     <GlobalStyles />
   </RecoilRoot>
 );
 
-export default HomePage;
+export default JoinPage;

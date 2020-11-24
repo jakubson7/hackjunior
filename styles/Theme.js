@@ -1,10 +1,4 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-
-const GlobalStyles = createGlobalStyle`
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-`;
+import { ThemeProvider } from 'styled-components';
 
 const theme = {
   blue0: '#91A0EC',
@@ -12,8 +6,8 @@ const theme = {
   blue2: '#BEC7F4',
 
   gray0: '#000000',
-  gray1: '#222222',
-  gray2: '#444444',
+  gray1: '#333333',
+  gray2: '#666666',
   gray3: '#dddddd',
   gray4: '#eeeeee',
   gray5: '#ffffff'
@@ -22,8 +16,7 @@ const theme = {
 const Theme = ({ children }) => (
   <ThemeProvider theme={theme} >
     { children }
-    <GlobalStyles />
   </ThemeProvider>
-)
+);
 
 export default Theme;

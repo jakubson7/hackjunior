@@ -7,16 +7,16 @@ import Navigation from '../components/Navigation';
 
 
 
-const HomePage = () => (
+const AboutPage = () => (
   <RecoilRoot>
     <SimpleView>
-      <Navigation page='/' />
+      <Navigation page='/about' />
       <Text>
-        aplikacja służy do wsólnego tworzenia mapy wyśli i eydycji w czasie rzeczywistym
+        about
       </Text>
     </SimpleView>
     <GlobalStyles />
   </RecoilRoot>
 );
 
-export default HomePage;
+export default AboutPage;

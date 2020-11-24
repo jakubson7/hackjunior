@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Theme from '../ui/Theme';
+import Theme from '../styles/Theme';
 
 
 
