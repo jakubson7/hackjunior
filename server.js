@@ -14,13 +14,20 @@ const { DEV, PORT } = require('./constants');
 
   await nextServer.prepare();
 
-  socketServer.on('connection', async () => {
-    console.log('user connected');
-  });
+  socketServer.on('connection', async socket => {
 
-  server.get('/api/test', async (request, response) => {
-    return response.send({
-      message: 'abc'
+    socket.on('user-connection', async (room, user) => {
+      await socket.join(room);
+      await socket.to(room).emit('user-join', user);
+    });
+
+    socket.on('user-disconnection', async (room, user) => {
+      await socket.to(room).emit('user-leave', user);
+      await socket.leave(room);
+    });
+
+    socket.on('mind-map-connection', async (room, data) => {
+      socket.to(room).emit('mind-map', data);
     });
   });
 
