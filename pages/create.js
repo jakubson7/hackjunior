@@ -14,9 +14,9 @@ const CreatePage = () => {
   const router = useRouter();
 
   const handleMindMapConnection = async () => {
-    await socket.emit('mind-map-connection', roomName, {
-      name: userName
-    });
+    //await socket.emit('mind-map-connection', roomName, {
+    //  name: userName
+    //});
     await router.push('/');
   }
 

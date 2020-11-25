@@ -5,19 +5,18 @@ import { RoomState } from './Room';
 
 
 
-const __NodeListState = atom({
+export const __NodeListState = atom({
   key: '__node-list',
   default: []
 });
 export const NodeListState = selector({
   key: 'node-list',
   get: ({ get }) => get(__NodeListState),
-  set:  ({ set, get }, setter) => {
+  set: ({ set, get }, setter) => {
     const { name } = get(RoomState);
-    const nodeList = get(__NodeListState);
 
     set(__NodeListState, setter);
-    socket.emit('send-node-list', name, nodeList);
+    socket.emit('send-node-list', name, setter);
   }
 });
 
@@ -46,7 +45,7 @@ export const NodeState = selectorFamily({
     const node = get(__NodeState(id));
 
     set(__NodeState(id), setter);
-    socket.emit('send-node-list', name, { id, node });
+    socket.emit('send-node', name, { id, node });
   }
 });
 
@@ -68,24 +67,43 @@ export const NodeConnectionPairPositionState = selectorFamily({
   })
 });
 
-export const NodeConnectionTreePoistionState = selectorFamily({
-  key: 'node-connection-list--position',
-  set: base => ({ set, get }, { movementX, movementY }) => {
+export const NodeTreeState = selectorFamily({
+  key: 'node-tree',
+  set: base => ({ set, get }, setter) => {
+    const baseNode = get(__NodeState(base));
+
+    set(__NodeState(base), setter);
+    baseNode.connections.forEach(target => set(NodeTreeState(target), setter));
+  },
+  get: base => ({ get }) => get(__NodeState(base))
+});
+
+export const NodeTreeStateSync = selectorFamily({
+  key: 'node-tree-sync',
+  set: base => ({ set, get }, setter) => {
     const baseNode = get(__NodeState(base));
     const { name } = get(RoomState);
 
-    set(__NodeState(base), node => ({
-      ...node,
-      position: {
-        x: node.position.x + movementX,
-        y: node.position.y + movementY
-      }
-    }));
-    baseNode.connections.forEach(target => set(NodeConnectionTreePoistionState(target), { movementX, movementY }));
-    socket.emit('send-node-tree-movement', name, { 
+    set(__NodeState(base), setter);
+    baseNode.connections.forEach(target => set(NodeTreeState(target), setter));
+    socket.emit('send-node-tree', name, { 
       id: base,
-      movementX,
-      movementY 
+      node: setter 
     });
+  },
+  get: base => ({ get }) => get(__NodeState(base))
+});
+
+export const NodeTreeByIdState = selector({
+  key: 'node-tree-by-id',
+  set: ({ get, set }, { id, node }) => {
+    set(NodeTreeState(id), node);
+  } 
+});
+
+export const NodeByIdState = selector({
+  key: 'node-by-id',
+  set: ({ get, set }, { id, node }) => {
+    set(__NodeState(id), node);
   }
 });

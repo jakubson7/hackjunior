@@ -21,6 +21,6 @@ export const UserListState = atom({
 export const RoomState = atom({
   key: 'room',
   default: {
-    name: 'foo'
+    name: 'abc'
   }
 });

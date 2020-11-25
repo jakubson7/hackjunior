@@ -13,26 +13,15 @@ nextServer.prepare();
 io.on('connection', socket => {
   console.log('connected to socket io')
 
-  socket.on('user-connection', async (room, user) => {
-    await socket.join(room);
-    await socket.to(room).emit('user-join', user);
-  });
-  socket.on('user-disconnection', async (room, user) => {
-    await socket.to(room).emit('user-leave', user);
-    await socket.leave(room);
-  });
-
   socket.on('send-node-list', (room, data) => {
-    socket.to(room).emit('change-node-list', data);
+    socket.broadcast.emit('change-node-list', data);
   });
-  socket.on('send-node-tree-movement', (room, { id, movementX, movementY }) => {
-    console.log(id, ' : ', movementX, movementY);
-    socket.to(room).emit('change-node-tree-movement', { room, movementX, movementY });
+  socket.on('send-node', (room, data) => {
+    socket.broadcast.emit('change-node', data);
   });
-
-  socket.once('mind-map-connection', (room, data) => {
-    console.log({ room, data });
-    socket.to(room).emit('mind-map', data);
+  socket.on('send-node-tree', (room, data) => {
+    console.log(data.node.position.x);
+    socket.broadcast.emit('change-node-tree', data);
   });
 });
 
@@ -40,7 +29,7 @@ app.get('/api/test', (request, response) => {
   return response.send({
     message: 'jeeej'
   });
-})
+});
 
 app.all('*', (request, response) => {
   return nextRequestHandler(request, response);
