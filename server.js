@@ -13,21 +13,14 @@ nextServer.prepare();
 io.on('connection', socket => {
   console.log('connected to socket io')
 
+  socket.on('send-node', (room, data) => {
+    socket.broadcast.emit('change-node', data);
+  })
   socket.on('send-node-list', (room, data) => {
     socket.broadcast.emit('change-node-list', data);
   });
-  socket.on('send-node', (room, data) => {
-    socket.broadcast.emit('change-node', data);
-  });
-  socket.on('send-node-tree', (room, data) => {
-    console.log(data.node.position.x);
-    socket.broadcast.emit('change-node-tree', data);
-  });
-});
-
-app.get('/api/test', (request, response) => {
-  return response.send({
-    message: 'jeeej'
+  socket.on('send-node-tree-movement', (room, data) => {
+    socket.broadcast.emit('change-node-tree-movement', data);
   });
 });
 

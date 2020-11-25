@@ -42,10 +42,9 @@ export const NodeState = selectorFamily({
   get: id => ({ get }) => get(__NodeState(id)),
   set: id => ({ set, get }, setter) => {
     const { name } = get(RoomState);
-    const node = get(__NodeState(id));
 
     set(__NodeState(id), setter);
-    socket.emit('send-node', name, { id, node });
+    socket.emit('send-node', name, { id, node: setter });
   }
 });
 
@@ -68,42 +67,35 @@ export const NodeConnectionPairPositionState = selectorFamily({
 });
 
 export const NodeTreeState = selectorFamily({
-  key: 'node-tree',
-  set: base => ({ set, get }, setter) => {
-    const baseNode = get(__NodeState(base));
+  key: 'node-tree-state',
+  set: id => ({ set, get }, { movementX, movementY }) => {
+    const node = get(__NodeState(id))
 
-    set(__NodeState(base), setter);
-    baseNode.connections.forEach(target => set(NodeTreeState(target), setter));
-  },
-  get: base => ({ get }) => get(__NodeState(base))
-});
-
-export const NodeTreeStateSync = selectorFamily({
-  key: 'node-tree-sync',
-  set: base => ({ set, get }, setter) => {
-    const baseNode = get(__NodeState(base));
-    const { name } = get(RoomState);
-
-    set(__NodeState(base), setter);
-    baseNode.connections.forEach(target => set(NodeTreeState(target), setter));
-    socket.emit('send-node-tree', name, { 
-      id: base,
-      node: setter 
+    set(__NodeState(id), node => ({
+      ...node,
+      position: {
+        x: node.position.x + movementX,
+        y: node.position.y + movementY
+      }
+    }));
+    node.connections.forEach(target => {
+      console.log('node-tree-connection-data: ', target);
+      set(NodeTreeState(target), { movementX, movementY })
     });
   },
-  get: base => ({ get }) => get(__NodeState(base))
+  get: id => ({ get }) => get(__NodeState(id))
 });
 
 export const NodeTreeByIdState = selector({
   key: 'node-tree-by-id',
-  set: ({ get, set }, { id, node }) => {
-    set(NodeTreeState(id), node);
+  set: ({ set }, { id, movementX, movementY }) => {
+    set(NodeTreeState(id), { movementX, movementY });
   } 
 });
 
 export const NodeByIdState = selector({
   key: 'node-by-id',
-  set: ({ get, set }, { id, node }) => {
+  set: ({ set }, { id, node }) => {
     set(__NodeState(id), node);
   }
 });

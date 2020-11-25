@@ -12,7 +12,8 @@ const Connectable = ({ id, children, sub }) => {
   useEffect(() => {
     setNode(node => ({
       ...node,
-      path: [...node.connections, id]
+      path: [...node.connections, id],
+      connections: []
     }));
   }, []);
 

@@ -14,8 +14,8 @@ const useSync = () => {
   useEffect(() => {
     socket.on('change-node-list', setNodeList);
     socket.on('change-node', setNodeById);
-    socket.on('change-node-tree', data => {
-      console.log('change-node-tree event');
+    socket.on('change-node-tree-movement', data => {
+      console.log('change-node-tree-movement: ', data);
       setNodeTreeById(data);
     });
   }, []);

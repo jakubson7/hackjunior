@@ -2,22 +2,18 @@ import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { DraggableCore } from 'react-draggable';
 
-import { NodeState, NodeTreeStateSync } from '../../state/MindMap';
+import { NodeState, NodeTreeState } from '../../state/MindMap';
+import socket from '../../utils/socket';
 
 
 
 const Draggable = ({ id, children }) => {
   const { position } = useRecoilValue(NodeState(id));
-  const setNodeTree = useSetRecoilState(NodeTreeStateSync(id));
+  const setNodeTree = useSetRecoilState(NodeTreeState(id));
 
   const handleDrag = ({ movementX, movementY }) => {
-    setNodeTree(node => ({
-      ...node,
-      position: {
-        x: node.position.x + movementX,
-        y: node.position.y + movementY
-      }
-    }));
+    setNodeTree({ movementX, movementY });
+    socket.emit('send-node-tree-movement', 0, { id, movementX, movementY });
   }
 
   return (
