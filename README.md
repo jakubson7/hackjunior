@@ -24,13 +24,18 @@ Real time mind mapping tool build from scratch using:
 To start an application build first, then start server.
 
 ```bash
+
+npm install
 npm run build
 npm start
+
 # or
+
+yarn
 yarn build
 yarn start
-#
+
 ```
 
-Open [http://localhost:3000/test] in multiple browser windows to see real time mind mapping tool,
+Open [http://localhost:3000/test](http://localhost:3000/test) in multiple browser windows to see real time mind mapping tool,
 other routes are not finished yet
